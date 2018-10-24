@@ -2,6 +2,7 @@ package com.vsantander.tmdbchallenge.presentation
 
 import android.app.Activity
 import android.app.Application
+import com.facebook.stetho.Stetho
 import com.vsantander.tmdbchallenge.di.AppInjector
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -20,6 +21,9 @@ class TMDBChallengeApp: Application(), HasActivityInjector {
 
         // Dagger 2 injection
         AppInjector.init(this)
+
+        //init Stetho
+        Stetho.initializeWithDefaults(this)
     }
 
 }

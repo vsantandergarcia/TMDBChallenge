@@ -36,12 +36,19 @@ ext {
 
     /* android architecture components */
     archLifecycleVersion = '1.1.1'
+    roomVersion = '1.1.1'
+    pagingVersion = '1.0.1'
 
     /* kotlin/java utils */
     daggerVersion = '2.17'
     rxKotlinVersion = '2.1.0'
     rxAndroidVersion = '2.1.0'
     ankoVersion = '0.10.4'
+    retrofitVersion = '2.3.0'
+    okhttp3LoggingInterceptor = '3.8.0'
+
+    /* Tools */
+    stethoVersion = '1.5.0'
 
     /* unit testing */
     junitVersion = '4.12'

@@ -55,6 +55,7 @@ class MovieListActivity : BaseActivity() {
                 .get(MovieListViewModel::class.java)
 
        // TODO finish load ui info from viewmodel
+        viewModel.loadPopularMovies()
     }
 
 }

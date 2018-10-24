@@ -3,6 +3,22 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
+
+// It is not safe to store access token raw in some file that is pushed to a public remote repository. We will
+// put the access token into ignored file secrets.properties. Please create an apikey_token field in local.properties
+// and assign your access token. For example: apikey_token="MyAccessToken"
+
+def getAccessToken() {
+    Properties properties = new Properties()
+    properties.load(new File(rootDir.absolutePath + "/local.properties").newDataInputStream())
+    def accessToken = properties.getProperty('apikey_token', null)
+    if (accessToken == null) {
+        throw new GradleException(
+                "Oh! Access token is missing. Please go to your local.properties file and define an apikey_token")
+    }
+    return accessToken
+}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -12,12 +28,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "API_ACCESS_TOKEN", getAccessToken()
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    androidExtensions {
+        experimental = true
     }
 }
 
@@ -31,6 +52,10 @@ dependencies {
 
     /* android architecture components */
     implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.roomVersion"
+    kapt "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+    implementation "android.arch.paging:runtime:$rootProject.pagingVersion"
 
     /* kotlin core */
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
@@ -44,6 +69,13 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
     implementation "io.reactivex.rxjava2:rxkotlin:$rootProject.rxKotlinVersion"
     implementation "org.jetbrains.anko:anko-commons:$rootProject.ankoVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3LoggingInterceptor"
+
+    /* Tools */
+    implementation "com.facebook.stetho:stetho:$rootProject.stethoVersion"
 
     /* Unit Testing */
     testImplementation "junit:junit:$rootProject.junitVersion"
