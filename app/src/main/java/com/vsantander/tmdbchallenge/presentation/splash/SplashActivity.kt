@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.os.Handler
 import com.vsantander.tmdbchallenge.R
 import com.vsantander.tmdbchallenge.presentation.base.activity.BaseActivity
+import com.vsantander.tmdbchallenge.presentation.list.MovieListActivity
+import org.jetbrains.anko.startActivity
 import java.util.concurrent.TimeUnit
 
 @BaseActivity.Animation(BaseActivity.FADE)
@@ -17,7 +19,8 @@ class SplashActivity: BaseActivity() {
 
     private val runnable: Runnable = Runnable {
         if (!isFinishing) {
-            // TODO route next activity
+            startActivity<MovieListActivity>()
+            finish()
         }
     }
 

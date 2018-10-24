@@ -29,6 +29,9 @@ dependencies {
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
     implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
 
+    /* android architecture components */
+    implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
+
     /* kotlin core */
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
@@ -38,6 +41,9 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rootProject.rxKotlinVersion"
+    implementation "org.jetbrains.anko:anko-commons:$rootProject.ankoVersion"
 
     /* Unit Testing */
     testImplementation "junit:junit:$rootProject.junitVersion"
