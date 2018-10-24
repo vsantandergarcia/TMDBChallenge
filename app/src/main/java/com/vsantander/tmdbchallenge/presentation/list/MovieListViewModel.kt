@@ -1,48 +1,30 @@
 package com.vsantander.tmdbchallenge.presentation.list
 
 import com.vsantander.tmdbchallenge.data.repository.MovieRepositoryImpl
-import com.vsantander.tmdbchallenge.domain.model.Movie
+import com.vsantander.tmdbchallenge.presentation.base.viewmodel.AbsentLiveData
 import com.vsantander.tmdbchallenge.presentation.base.viewmodel.BaseViewModel
-import com.vsantander.tmdbchallenge.utils.extension.logd
-import com.vsantander.tmdbchallenge.utils.extension.loge
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.rxkotlin.subscribeBy
+import com.vsantander.tmdbchallenge.utils.Constants
+import com.vsantander.tmdbchallenge.utils.extension.switchMap
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MovieListViewModel @Inject constructor(
-        private val movieRepository: MovieRepositoryImpl
+        repository: MovieRepositoryImpl
 ): BaseViewModel() {
 
-    fun loadPopularMovies() {
+    private val repoResult = AbsentLiveData.create(
+            repository.getPopularMovies(
+                    Constants.NUMBER_OF_ITEMS_PER_PAGE, Schedulers.io())
+    )
 
-        disposables += movieRepository.getPopularMoviesNoPagination()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            logd("loadPopularMovies.onSuccess")
-                            saveMovies(it)
-                        },
-                        onError = {
-                            loge("loadPopularMovies.onError", it)
-                        }
-                )
-    }
+    val popularMovies = repoResult.switchMap { it.pagedList }
 
-    private fun saveMovies(movies: List<Movie>) {
+    val resourceState = repoResult.switchMap { it.resourceState }
 
-        disposables += movieRepository.saveMovies(movies)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onComplete = {
-                            logd("saveMovies.onSuccess")
-                        },
-                        onError = {
-                            loge("saveMovies.onError", it)
-                        }
-                )
-    }
+    val refreshState = repoResult.switchMap { it.refreshState }
+
+    fun retry() = repoResult.value?.retry?.invoke()
+
+    fun refresh() = repoResult.value?.refresh?.invoke()
+
 }

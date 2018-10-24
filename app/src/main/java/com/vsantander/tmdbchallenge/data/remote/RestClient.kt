@@ -10,6 +10,6 @@ import retrofit2.http.Query
 interface RestClient {
 
     @GET("movie/popular?api_key=${BuildConfig.API_ACCESS_TOKEN}")
-    fun getPopularMovies(@Query("page") page: Int): Single<DefaultResponse<MovieTO>>
+    fun getPopularMovies(@Query("page") page: Int): Single<DefaultResponse<List<MovieTO>>>
 
 }

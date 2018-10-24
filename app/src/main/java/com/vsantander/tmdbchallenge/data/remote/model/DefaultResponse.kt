@@ -13,5 +13,6 @@ data class DefaultResponse<T> (
         val totalPages: Int,
 
         @SerializedName("results")
-        val results: List<T>
+        val results: T
+
 )

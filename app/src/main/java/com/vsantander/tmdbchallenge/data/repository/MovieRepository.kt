@@ -1,13 +1,19 @@
 package com.vsantander.tmdbchallenge.data.repository
 
+import com.vsantander.tmdbchallenge.domain.model.Listing
 import com.vsantander.tmdbchallenge.domain.model.Movie
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.Scheduler
 
 interface MovieRepository {
 
-    fun getPopularMoviesNoPagination(): Single<List<Movie>>
-
-    fun saveMovies(movies: List<Movie>): Completable
+    /**
+     * Gets a [Listing] of Movie
+     *
+     * @param itemsPerPage The number of items that we want to retrieve
+     * @param backgroundScheduler The scheduler of background processing
+     * @return [Listing]  a Listing wrapper with the Movie popular information.
+     */
+    fun getPopularMovies(itemsPerPage: Int,
+                         backgroundScheduler: Scheduler): Listing<Movie>
 
 }
