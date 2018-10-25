@@ -9,9 +9,6 @@ class MovieEntityMapper @Inject constructor() {
     fun fromEntity(value: MovieEntity): Movie = Movie(
             id = value.id,
             title = value.title,
-            popularity = value.popularity,
-            voteCount = value.voteCount,
-            voteAverage = value.voteAverage,
             overview = value.overview,
             backdropPath = value.backdropPath,
             posterPath = value.posterPath,
@@ -22,9 +19,6 @@ class MovieEntityMapper @Inject constructor() {
     fun toEntity(value: Movie): MovieEntity = MovieEntity(
             id = value.id,
             title = value.title,
-            popularity = value.popularity,
-            voteCount = value.voteCount,
-            voteAverage = value.voteAverage,
             overview = value.overview,
             backdropPath = value.backdropPath,
             posterPath = value.posterPath,

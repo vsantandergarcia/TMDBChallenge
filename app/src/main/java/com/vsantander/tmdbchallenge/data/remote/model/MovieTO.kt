@@ -6,8 +6,8 @@ data class MovieTO (
         @SerializedName("id")
         val id: Int,
 
-        @SerializedName("original_name")
-        val originalName: String,
+        @SerializedName("video")
+        val video: Boolean,
 
         @SerializedName("title")
         val title: String,
@@ -18,8 +18,8 @@ data class MovieTO (
         @SerializedName("popularity")
         val popularity: Float,
 
-        @SerializedName("origin_country")
-        val originCountry: List<String>,
+        @SerializedName("original_title")
+        val originalTitle: String,
 
         @SerializedName("vote_count")
         val voteCount: Int,
@@ -27,8 +27,8 @@ data class MovieTO (
         @SerializedName("vote_average")
         val voteAverage: Float,
 
-        @SerializedName("first_air_date")
-        val firstAirDate: String,
+        @SerializedName("adult")
+        val adult: Boolean,
 
         @SerializedName("original_language")
         val originalLanguage: String,
