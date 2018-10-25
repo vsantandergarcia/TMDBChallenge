@@ -14,7 +14,8 @@ class MovieTOMapper @Inject constructor() {
             voteAverage = value.voteAverage,
             overview = value.overview,
             backdropPath = value.backdropPath,
-            posterPath = value.posterPath)
+            posterPath = value.posterPath,
+            year = value.releaseDate.split("-")[0])
 
     fun toEntity(values: List<MovieTO>): List<Movie> = values.map { toEntity(it) }
 }

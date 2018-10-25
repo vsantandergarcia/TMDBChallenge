@@ -21,7 +21,9 @@ data class MovieEntity (
         @ColumnInfo(name = "backdropPath")
         val backdropPath: String?,
         @ColumnInfo(name = "posterPath")
-        val posterPath: String?
+        val posterPath: String?,
+        @ColumnInfo(name = "year")
+        val year: String?
 ) {
         // To be consistent with changing backend order, we need to keep data like this
         var indexInResponse: Int = -1

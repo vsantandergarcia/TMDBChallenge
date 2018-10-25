@@ -11,10 +11,12 @@ import com.vsantander.tmdbchallenge.R
 import com.vsantander.tmdbchallenge.domain.model.ResourceState
 import com.vsantander.tmdbchallenge.domain.model.Status
 import com.vsantander.tmdbchallenge.presentation.base.activity.BaseActivity
+import com.vsantander.tmdbchallenge.presentation.detail.MovieDetailsActivity
 import com.vsantander.tmdbchallenge.presentation.list.adapter.PopularMoviesPagedAdapter
 import com.vsantander.tmdbchallenge.utils.extension.logd
 import com.vsantander.tmdbchallenge.utils.extension.observe
 import kotlinx.android.synthetic.main.activity_movie_list.*
+import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 @BaseActivity.Animation(BaseActivity.FADE)
@@ -47,6 +49,7 @@ class MovieListActivity : BaseActivity() {
 
         adapter = PopularMoviesPagedAdapter {
             logd("item movie click with id:${it.id}")
+            startActivity<MovieDetailsActivity>(Pair(MovieDetailsActivity.EXTRA_MOVIE, it))
         }
 
         swipeRefreshLayout.setOnRefreshListener { viewModel.refresh() }

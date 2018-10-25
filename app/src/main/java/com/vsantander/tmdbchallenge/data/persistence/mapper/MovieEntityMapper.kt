@@ -14,7 +14,8 @@ class MovieEntityMapper @Inject constructor() {
             voteAverage = value.voteAverage,
             overview = value.overview,
             backdropPath = value.backdropPath,
-            posterPath = value.posterPath)
+            posterPath = value.posterPath,
+            year = value.year)
 
     fun fromEntity(values: List<MovieEntity>): List<Movie> = values.map { fromEntity(it) }
 
@@ -26,7 +27,8 @@ class MovieEntityMapper @Inject constructor() {
             voteAverage = value.voteAverage,
             overview = value.overview,
             backdropPath = value.backdropPath,
-            posterPath = value.posterPath)
+            posterPath = value.posterPath,
+            year = value.year)
 
     fun toEntity(values: List<Movie>): List<MovieEntity> = values.map { toEntity(it) }
 
