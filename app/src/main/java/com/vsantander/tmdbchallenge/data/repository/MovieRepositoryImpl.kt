@@ -3,6 +3,7 @@ package com.vsantander.tmdbchallenge.data.repository
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
 import com.vsantander.tmdbchallenge.data.persistence.Database
 import com.vsantander.tmdbchallenge.data.persistence.mapper.MovieEntityMapper
 import com.vsantander.tmdbchallenge.data.remote.RestClient
@@ -63,6 +64,35 @@ class MovieRepositoryImpl @Inject constructor(
                 },
                 refreshState = refreshState)
 
+    }
+
+    override fun getSearchMovies(search: String, itemsPerPage: Int, prefetchDistance: Int,
+                                 backgroundScheduler: Scheduler): Listing<Movie> {
+
+        // create a source factory that creates the DataSource wrapper
+        val sourceFactory = SearchMoviesDataSourceFactory(search,
+                itemsPerPage,
+                restClient,
+                movieTOMapper,
+                backgroundScheduler)
+        // set the configuration of the pagedList
+        val pagedListConfig = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(prefetchDistance)
+                .setPageSize(itemsPerPage)
+                .build()
+        // create the pagedList using the factory
+        val pagedList = LivePagedListBuilder(sourceFactory, pagedListConfig)
+                .build()
+
+        val resourceState = sourceFactory.sourceLiveData.switchMap { it.resourceState }
+        return Listing(
+                pagedList = pagedList,
+                resourceState = resourceState,
+                retry = { sourceFactory.sourceLiveData.value?.retry() },
+                refresh = {},
+                refreshState = resourceState
+        )
     }
 
     /**

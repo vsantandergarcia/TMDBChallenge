@@ -12,4 +12,8 @@ interface RestClient {
     @GET("movie/popular?api_key=${BuildConfig.API_ACCESS_TOKEN}")
     fun getPopularMovies(@Query("page") page: Int): Single<DefaultResponse<List<MovieTO>>>
 
+    @GET("search/movie?api_key=${BuildConfig.API_ACCESS_TOKEN}")
+    fun getSearchMovies(@Query("query") search: String,
+                        @Query("page") page: Int): Single<DefaultResponse<List<MovieTO>>>
+
 }
