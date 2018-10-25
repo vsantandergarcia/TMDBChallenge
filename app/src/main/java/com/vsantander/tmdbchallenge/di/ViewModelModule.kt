@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.vsantander.tmdbchallenge.presentation.base.viewmodel.ViewModelFactory
 import com.vsantander.tmdbchallenge.presentation.list.MovieListViewModel
+import com.vsantander.tmdbchallenge.presentation.search.SearchMovieListViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -18,4 +19,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MovieListViewModel::class)
     abstract fun bindMovieListViewModel(viewModel: MovieListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchMovieListViewModel::class)
+    abstract fun bindSearchMovieListViewModel(viewModel: SearchMovieListViewModel): ViewModel
 }

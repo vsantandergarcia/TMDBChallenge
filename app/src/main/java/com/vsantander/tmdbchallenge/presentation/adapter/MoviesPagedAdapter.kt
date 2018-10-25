@@ -1,4 +1,4 @@
-package com.vsantander.tmdbchallenge.presentation.list.adapter
+package com.vsantander.tmdbchallenge.presentation.adapter
 
 import android.arch.lifecycle.Observer
 import android.support.v7.util.DiffUtil
@@ -10,9 +10,9 @@ import com.vsantander.tmdbchallenge.domain.model.Movie
 import com.vsantander.tmdbchallenge.domain.model.ResourceState
 import com.vsantander.tmdbchallenge.presentation.base.adapter.PagedListAdapterBase
 import com.vsantander.tmdbchallenge.presentation.base.adapter.ViewWrapper
-import com.vsantander.tmdbchallenge.presentation.list.item.MovieItem
+import com.vsantander.tmdbchallenge.presentation.item.MovieItem
 
-class PopularMoviesPagedAdapter (private val onItemClick: (movie: Movie) -> Unit
+class MoviesPagedAdapter (private val onItemClick: (movie: Movie) -> Unit
 ) : PagedListAdapterBase<Movie>(diffCallback) {
     private var hasExtraRow = false
 

@@ -1,4 +1,4 @@
-package com.vsantander.tmdbchallenge.presentation.list.item
+package com.vsantander.tmdbchallenge.presentation.item
 
 import android.content.Context
 import android.util.AttributeSet

@@ -6,13 +6,16 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuItem
 import androidx.core.view.isVisible
 import com.vsantander.tmdbchallenge.R
 import com.vsantander.tmdbchallenge.domain.model.ResourceState
 import com.vsantander.tmdbchallenge.domain.model.Status
 import com.vsantander.tmdbchallenge.presentation.base.activity.BaseActivity
 import com.vsantander.tmdbchallenge.presentation.detail.MovieDetailsActivity
-import com.vsantander.tmdbchallenge.presentation.list.adapter.PopularMoviesPagedAdapter
+import com.vsantander.tmdbchallenge.presentation.adapter.MoviesPagedAdapter
+import com.vsantander.tmdbchallenge.presentation.search.SearchMovieListActivity
 import com.vsantander.tmdbchallenge.utils.extension.logd
 import com.vsantander.tmdbchallenge.utils.extension.observe
 import kotlinx.android.synthetic.main.activity_movie_list.*
@@ -31,7 +34,7 @@ class MovieListActivity : BaseActivity() {
 
     private lateinit var viewModel: MovieListViewModel
 
-    private lateinit var adapter: PopularMoviesPagedAdapter
+    private lateinit var adapter: MoviesPagedAdapter
 
     /* Activity methods */
 
@@ -42,12 +45,25 @@ class MovieListActivity : BaseActivity() {
         setUpViewModels()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_movie_list, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when {
+            item?.itemId == R.id.action_search -> startActivity<SearchMovieListActivity>()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     /* setUp methods */
 
     private fun setUpViews() {
         setUpToolbar()
 
-        adapter = PopularMoviesPagedAdapter {
+        adapter = MoviesPagedAdapter {
             logd("item movie click with id:${it.id}")
             startActivity<MovieDetailsActivity>(Pair(MovieDetailsActivity.EXTRA_MOVIE, it))
         }
