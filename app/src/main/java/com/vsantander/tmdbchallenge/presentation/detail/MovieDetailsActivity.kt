@@ -1,6 +1,7 @@
 package com.vsantander.tmdbchallenge.presentation.detail
 
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.view.MenuItem
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_movie_details.*
 import kotlinx.android.synthetic.main.activity_movie_details_content.*
 
 @BaseActivity.Animation(BaseActivity.PUSH)
-class MovieDetailsActivity: BaseActivity() {
+class MovieDetailsActivity: BaseActivity(), AppBarLayout.OnOffsetChangedListener {
 
     companion object {
         const val EXTRA_MOVIE = "EXTRA_MOVIE"
@@ -34,6 +35,16 @@ class MovieDetailsActivity: BaseActivity() {
         } ?: throw RuntimeException("bad initialization. not found some extras")
     }
 
+    override fun onStart() {
+        super.onStart()
+        appbar.addOnOffsetChangedListener(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        appbar.removeOnOffsetChangedListener(this)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // handle item selection
         return when (item.itemId) {
@@ -42,6 +53,18 @@ class MovieDetailsActivity: BaseActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    /* AppBarLayout.OnOffsetChangedListener methods */
+
+    override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+        if (Math.abs(verticalOffset) == appBarLayout?.totalScrollRange) {
+            appbar.contentDescription = getString(R.string.img_collapsed)
+        } else if (verticalOffset == 0) {
+            appbar.contentDescription = getString(R.string.img_expanded)
+        } else {
+            appbar.contentDescription = getString(R.string.img_collapsing)
         }
     }
 

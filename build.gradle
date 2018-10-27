@@ -22,6 +22,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
     }
 }
 
@@ -57,7 +60,12 @@ ext {
     /* unit testing */
     junitVersion = '4.12'
     androidRunnerVersion = '1.0.2'
+    mockitoVersion = '2.13.0'
+    mockwebServerVersion = '3.8.1'
 
     /* ui testing */
     espressoCoreVersion = '3.0.2'
+    espressoTestRules = '0.5'
+    espressoIntents = '3.0.2'
+    espressoContrib = '2.2.2'
 }
